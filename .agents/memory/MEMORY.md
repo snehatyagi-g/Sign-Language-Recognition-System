@@ -1,0 +1,1 @@
+- [FastAPI API smoke tests](fastapi-api-smoke-tests.md) — the local TestClient needs `httpx2`; use the running service through the shared proxy for smoke checks.

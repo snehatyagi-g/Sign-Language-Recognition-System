@@ -1,0 +1,19 @@
+{
+  "labels": [
+    "OPEN_PALM",
+    "CLOSED_FIST",
+    "ONE_FINGER",
+    "TWO_FINGERS",
+    "THREE_FINGERS",
+    "FOUR_FINGERS",
+    "FIVE_FINGERS",
+    "THUMBS_UP",
+    "THUMBS_DOWN",
+    "PEACE",
+    "OK",
+    "PINCH",
+    "POINTING",
+    "ROCK",
+    "CALL_ME"
+  ]
+}

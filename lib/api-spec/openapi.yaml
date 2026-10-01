@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: sign-language
+    description: Sign-language recognition, dataset, and model-training operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,100 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /sign-language/labels:
+    get:
+      operationId: getGestureLabels
+      tags: [sign-language]
+      summary: Get configured gesture labels
+      responses:
+        "200":
+          description: Available gesture labels
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GestureLabels"
+  /sign-language/model/status:
+    get:
+      operationId: getGestureModelStatus
+      tags: [sign-language]
+      summary: Check whether a trained model is ready
+      responses:
+        "200":
+          description: Model and dataset status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelStatus"
+  /sign-language/training/status:
+    get:
+      operationId: getTrainingStatus
+      tags: [sign-language]
+      summary: Get the latest model-training status
+      responses:
+        "200":
+          description: Training state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainingStatus"
+  /sign-language/predict:
+    post:
+      operationId: predictGesture
+      tags: [sign-language]
+      summary: Classify one normalized hand-landmark feature vector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GesturePredictionInput"
+      responses:
+        "200":
+          description: Model prediction
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GesturePrediction"
+        "503":
+          description: No trained model is available
+  /sign-language/dataset/import:
+    post:
+      operationId: importGestureDataset
+      tags: [sign-language]
+      summary: Save collected labeled landmark samples
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GestureDatasetInput"
+      responses:
+        "200":
+          description: Samples saved to the training dataset
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GestureDatasetResult"
+  /sign-language/training/start:
+    post:
+      operationId: startGestureTraining
+      tags: [sign-language]
+      summary: Train or retrain the Keras gesture classifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GestureTrainingInput"
+      responses:
+        "202":
+          description: Training job started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GestureTrainingResult"
+        "409":
+          description: Training is already in progress
 components:
   schemas:
     HealthStatus:
@@ -33,4 +129,141 @@ components:
           type: string
       required:
         - status
+    GestureLabels:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+      required: [labels]
+    ModelStatus:
+      type: object
+      properties:
+        modelReady:
+          type: boolean
+        modelPath:
+          type: ["string", "null"]
+        labels:
+          type: array
+          items:
+            type: string
+        datasetSamples:
+          type: integer
+        classesWithSamples:
+          type: integer
+        minimumSamplesPerClass:
+          type: integer
+        message:
+          type: string
+      required:
+        - modelReady
+        - modelPath
+        - labels
+        - datasetSamples
+        - classesWithSamples
+        - minimumSamplesPerClass
+        - message
+    GesturePredictionInput:
+      type: object
+      properties:
+        features:
+          type: array
+          minItems: 63
+          maxItems: 63
+          items:
+            type: number
+      required: [features]
+    GesturePrediction:
+      type: object
+      properties:
+        label:
+          type: string
+        confidence:
+          type: number
+        probabilities:
+          type: object
+          additionalProperties:
+            type: number
+      required: [label, confidence, probabilities]
+    GestureSample:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 1
+        features:
+          type: array
+          minItems: 63
+          maxItems: 63
+          items:
+            type: number
+      required: [label, features]
+    GestureDatasetInput:
+      type: object
+      properties:
+        samples:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/GestureSample"
+      required: [samples]
+    GestureClassCount:
+      type: object
+      properties:
+        label:
+          type: string
+        count:
+          type: integer
+      required: [label, count]
+    GestureDatasetResult:
+      type: object
+      properties:
+        importedSamples:
+          type: integer
+        totalSamples:
+          type: integer
+        classCounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/GestureClassCount"
+      required: [importedSamples, totalSamples, classCounts]
+    GestureTrainingInput:
+      type: object
+      properties:
+        epochs:
+          type: integer
+          minimum: 5
+          maximum: 100
+        batchSize:
+          type: integer
+          minimum: 8
+          maximum: 128
+      required: [epochs, batchSize]
+    GestureTrainingResult:
+      type: object
+      properties:
+        jobId:
+          type: string
+        status:
+          type: string
+      required: [jobId, status]
+    TrainingStatus:
+      type: object
+      properties:
+        status:
+          type: string
+        progress:
+          type: integer
+        accuracy:
+          type: ["number", "null"]
+        testSamples:
+          type: ["integer", "null"]
+        message:
+          type: string
+        startedAt:
+          type: ["string", "null"]
+        completedAt:
+          type: ["string", "null"]
+      required: [status, progress, accuracy, testSamples, message, startedAt, completedAt]
 

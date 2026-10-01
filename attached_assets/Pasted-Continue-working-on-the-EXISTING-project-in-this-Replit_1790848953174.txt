@@ -1,0 +1,85 @@
+Continue working on the EXISTING project in this Replit workspace.
+
+IMPORTANT:
+
+* Do NOT create a new project.
+* Do NOT restart the project.
+* Do NOT delete or replace the existing implementation.
+* Preserve everything that is already working.
+* First inspect the existing files and understand what has already been implemented.
+* Then continue from the current state.
+
+The project is:
+
+# Sign Language Recognition
+
+Real-time gesture recognition using MediaPipe and TensorFlow.
+
+My goal is to finish this existing project into a fully functional academic AI/ML project.
+
+Before making changes, inspect the entire existing codebase and determine:
+
+1. What features are already completed?
+2. What features are partially completed?
+3. What files/components are missing?
+4. What errors exist?
+5. Is MediaPipe working?
+6. Is TensorFlow/Keras working?
+7. Is the webcam integration working?
+8. Is the gesture dataset/training pipeline implemented?
+9. Is the frontend connected correctly to the backend?
+10. What remains to make the project fully functional?
+
+Then continue development from exactly where the project currently is.
+
+Do not rebuild functionality that already works.
+
+The final project should have:
+
+* Real-time webcam
+* MediaPipe hand detection
+* 21 hand landmarks
+* Landmark preprocessing
+* TensorFlow/Keras gesture classification
+* Actual trained-model prediction
+* Gesture name
+* Confidence score
+* Low-confidence/unknown handling
+* Recognized text
+* Recognition history
+* Clear button
+* Start/stop camera
+* Text-to-speech
+* Professional UI
+* Dataset collection capability
+* Model training capability
+* Model evaluation
+* Error handling
+
+Use real AI/ML functionality.
+
+DO NOT:
+
+* hardcode predictions
+* create fake AI
+* use random predictions
+* create fake accuracy
+* use placeholder buttons
+* replace the existing project with a template
+
+If something is missing, add it to the existing architecture.
+
+If something is broken, debug and fix it.
+
+After every major change, test the application and fix any errors you encounter.
+
+When complete, make sure the project can actually be run inside Replit.
+
+Also provide:
+
+* how to run it
+* how to collect gesture data
+* how to train the model
+* how to start real-time recognition
+* what files were changed
+* what remains, if anything

@@ -1,0 +1,1 @@
+"""Python ML service for the sign-language recognition application."""

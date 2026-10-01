@@ -1,0 +1,47 @@
+kind = "web"
+previewPath = "/"
+title = "Sign Language Recognition System"
+description = "A real-time hand gesture recognition studio for learning and testing a TensorFlow model. Uses webcam-based hand landmarks, browser MediaPipe tracking, a Keras prediction service, labeled data collection, and guided model training."
+version = "1.0.0"
+id = "artifacts/sign-language-recognition"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22917
+
+[services.development]
+run = "pnpm --filter @workspace/sign-language-recognition run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sign-language-recognition", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/sign-language-recognition/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22917"
+BASE_PATH = "/"
+
+[[services]]
+name = "ml-api"
+paths = ["/api/sign-language"]
+localPort = 8000
+
+[services.development]
+run = "python -m uvicorn ml_service.main:app --app-dir artifacts/sign-language-recognition --host 0.0.0.0 --port 8000"
+
+[services.production]
+
+[services.production.build]
+args = ["uv", "sync", "--frozen", "--no-dev"]
+
+[services.production.run]
+args = ["uv", "run", "--frozen", "uvicorn", "ml_service.main:app", "--app-dir", "artifacts/sign-language-recognition", "--host", "0.0.0.0", "--port", "8000"]
+
+[services.production.health.startup]
+path = "/api/sign-language/model/status"

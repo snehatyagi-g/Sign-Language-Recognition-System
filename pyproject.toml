@@ -1,0 +1,14 @@
+[project]
+name = "sign-language-recognition"
+version = "0.1.0"
+description = "FastAPI and TensorFlow backend for a real-time MediaPipe hand gesture recognition app."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.142.2",
+    "mediapipe>=1.0.1",
+    "numpy>=2.4.6",
+    "pandas>=3.0.6",
+    "scikit-learn>=1.9.1",
+    "tensorflow>=2.21.0",
+    "uvicorn>=0.54.0",
+]
