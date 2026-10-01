@@ -1,1 +1,2 @@
 - [FastAPI API smoke tests](fastapi-api-smoke-tests.md) — the local TestClient needs `httpx2`; use the running service through the shared proxy for smoke checks.
+- [Dataset import state](dataset-import-state.md) — distinguish the new batch from live aggregate data, and check model freshness after appending.

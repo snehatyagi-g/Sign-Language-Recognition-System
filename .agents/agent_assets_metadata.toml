@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "S4aHwkbWFA6U16pfi7gGf"
+uri = "file://artifacts/sign-language-recognition/ml_service/data/public_image_dataset_landmarks.csv"
+type = "table"
+title = "Public hand-gesture landmark dataset"
+description = "133 MediaPipe-normalized samples in label,f0,…,f62 CSV format: CLOSED_FIST 34, OPEN_PALM 46, PEACE 22, THUMBS_UP 31. Source and MIT attribution are documented alongside the CSV."
+logical_id = "8f075c77-20d0-4c69-af83-f1369cd8362e"
+content_hash = "sha256:8722dfa866ec05f57e86379f1a4621447311918c47e4a1149e17211b35a54ac0"
+size = 165537
+mtime_ms = 1790855331014
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:3387ba66-2256-4129-a16f-d9b2c02afb9b/8f075c77-20d0-4c69-af83-f1369cd8362e/58ce6b79-d41e-4950-85d9-d549467e5943"
+storage_version_token = "1790855363113595"
+content_type = "text/csv"
